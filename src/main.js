@@ -21,9 +21,8 @@ const app = async () => {
     const port = process.env.BROKER_PORT || "1883"
     const client = await connect({ broker, port })
 
+    
 
-    console.log(data)
-    console.log({client})
   } catch (e) {
     console.log(e)
   }

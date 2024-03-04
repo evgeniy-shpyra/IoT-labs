@@ -6,7 +6,7 @@ const connect = async ({ broker, port }) => {
   const client = await MQTT.connectAsync(url)
 
   try {
-    const client = await asyncMqtt.connectAsync(url)
+    const client = await MQTT.connectAsync(url)
     console.log(`Connected to ${url}`)
     return client
   } catch (e) {
