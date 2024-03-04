@@ -2,7 +2,6 @@ import parseCsv from "../utils/parseCsv.js"
 import validation from "../utils/validator.js"
 
 const readData = async (src = []) => {
-  const errors = []
   const data = {}
 
   for (const { path, schema } of src) {
