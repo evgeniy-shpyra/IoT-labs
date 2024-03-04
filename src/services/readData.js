@@ -6,24 +6,15 @@ const readData = async (src = []) => {
   const data = {}
 
   for (const { path, schema } of src) {
-    try {
-      const readData = await parseCsv(path)
-      const isValid = validation(readData, schema)
-      const name = path.split("/").at(-1).split(".").at(0)
+    const readData = await parseCsv(path)
+    const isValid = validation(readData, schema)
+    const name = path.split("/").at(-1).split(".").at(0)
 
-      if (isValid) {
-        data[name] = readData
-        continue
-      }
-      throw new Error(`Data is't valid: ${name}`)
-    } catch (e) {
-      errors.push({ message: e.message, path })
+    if (isValid) {
+      data[name] = readData
+      continue
     }
-  }
-
-  if(errors){
-    console.log("Errors:", errors)
-    process.exit(1)
+    throw new Error(`Data is't valid: ${name}`)
   }
 
   return data
