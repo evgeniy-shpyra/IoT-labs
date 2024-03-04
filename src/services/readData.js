@@ -21,7 +21,12 @@ const readData = async (src = []) => {
     }
   }
 
-  return [errors, data]
+  if(errors){
+    console.log("Errors:", errors)
+    process.exit(1)
+  }
+
+  return data
 }
 
 export default readData

@@ -3,7 +3,8 @@ import gpsSchema from "./schema/gpsSchema.js"
 import readData from "./services/readData.js"
 
 const app = async () => {
-  const [readingErrors, data] = await readData([
+  // read data
+  const data = await readData([
     {
       path: "./data/accelerometer.csv",
       schema: accelerometerSchema,
@@ -14,13 +15,7 @@ const app = async () => {
     },
   ])
 
-  if (readingErrors.length) {
-    for (const error of readingErrors) {
-      console.error(error)
-    }
-    process.exit(1)
-  }
-
+  
   console.log(data)
 }
 
