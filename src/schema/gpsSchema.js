@@ -3,8 +3,8 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      longitude: { type: "string" },
-      latitude: { type: "string" },
+      longitude: { type: "string", format: "float" },
+      latitude: { type: "string", format: "float" },
     },
     required: ["longitude", "latitude"],
     additionalProperties: false,

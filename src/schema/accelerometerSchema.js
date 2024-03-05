@@ -3,9 +3,9 @@ const schema = {
   items: {
     type: "object",
     properties: {
-      x: { type: "string" },
-      y: { type: "string" },
-      z: { type: "string" },
+      x: { type: "string", format: "int32" },
+      y: { type: "string", format: "int32" },
+      z: { type: "string", format: "int32" },
     },
     required: ["x", "y", "z"],
     additionalProperties: false,

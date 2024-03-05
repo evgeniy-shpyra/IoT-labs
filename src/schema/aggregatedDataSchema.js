@@ -4,9 +4,9 @@ const schema = {
     accelerometer: {
       type: "object",
       properties: {
-        x: { type: "string" },
-        y: { type: "string" },
-        z: { type: "string" },
+        x: { type: "string", format: "int32" },
+        y: { type: "string", format: "int32" },
+        z: { type: "string", format: "int32" },
       },
       required: ["x", "y", "z"],
       additionalProperties: false,
@@ -14,8 +14,8 @@ const schema = {
     gps: {
       type: "object",
       properties: {
-        longitude: { type: "string" },
-        latitude: { type: "string" },
+        longitude: { type: "string", format: "float" },
+        latitude: { type: "string", format: "float" },
       },
       required: ["longitude", "latitude"],
       additionalProperties: false,
