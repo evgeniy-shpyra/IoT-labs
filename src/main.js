@@ -43,8 +43,8 @@ const app = async () => {
     ])
 
     // create a connect
-    const broker = process.env.BROKER_HOST || "localhost"
-    const port = process.env.BROKER_PORT || "1883"
+    const broker = process.env.MQTT_BROKER_HOST || "0.0.0.0"
+    const port = process.env.MQTT_BROKER_PORT || "1883"
     const client = await connect({ broker, port })
 
     const gpsAccTopic = process.env.GPS_ACC_TOPIC || "agent/gpsAcc"

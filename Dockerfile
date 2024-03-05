@@ -7,8 +7,6 @@ COPY package-lock.json package-lock.json
 
 RUN npm install
 
-COPY src src 
-COPY data data 
-COPY .env .env 
+COPY . .
 
 CMD ["node", "src/main.js"]
