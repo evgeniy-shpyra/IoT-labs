@@ -1,25 +1,15 @@
 const schema = {
-  type: "array",
-  items: {
-    type: "object",
-    properties: {
-      gps: {
-        type: "object",
-        properties: {
-          longitude: { type: "string", format: "float", },
-          latitude: { type: "string", format: "float", },
-        },
-        required: ["longitude", "latitude"],
-        additionalProperties: false,
-      },
-      empty_count: {
-        type: "string",
-        format: "int",
-      },
+  type: 'object',
+  properties: {
+    longitude: { type: 'string', format: 'float' },
+    latitude: { type: 'string', format: 'float' },
+    empty_count: {
+      type: 'string',
+      format: 'int32',
     },
-    required: ["gps", "latitude"],
-    additionalProperties: false,
   },
+  required: ['empty_count', 'longitude', 'latitude'],
+  additionalProperties: false,
 }
 
 export default schema

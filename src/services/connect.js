@@ -1,6 +1,8 @@
-import MQTT from "async-mqtt"
+import MQTT from 'async-mqtt'
 
-const connect = async ({ broker, port }) => {
+const connect = async () => {
+  const broker = process.env.MQTT_BROKER_HOST || '0.0.0.0'
+  const port = process.env.MQTT_BROKER_PORT || '1883'
   const url = `mqtt://${broker}:${port}`
 
   const client = await MQTT.connectAsync(url)
