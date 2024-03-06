@@ -57,9 +57,9 @@ const app = async () => {
     const parkingTopic = process.env.PARKING_TOPIC || 'agent/parking'
 
     // // send data
-    const delay = Number(process.env.PUBLISH_DELAY) || 100
+    const delay = Number(process.env.DELAY) || 100
     const uuid = process.env.UUID || crypto.randomUUID()
-    
+
     while (true) {
       // read line
       const { accelerometer, gps, parking } = await readLine()

@@ -23,8 +23,10 @@ services:
     environment:
       MQTT_BROKER_HOST: "mqtt"
       MQTT_BROKER_PORT: 1883
-      MQTT_TOPIC: "agent_data_topic"
-      DELAY: 0.1
+      GPS_ACC_TOPIC: "agent/gpsAcc"
+      PARKING_TOPIC: "agent/parking"
+      UUID: "7ad5f74e-f497-46d7-a9d8-6d58087a15bc"
+      DELAY: 100
     networks:
       mqtt_network:
 
