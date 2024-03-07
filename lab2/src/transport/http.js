@@ -1,17 +1,24 @@
 import Fastify from 'fastify'
+import ajvFormats from 'ajv-formats'
 
-const http = (routes = {}, opt = {}) => {
+const http = (controllers = {}, opt = {}) => {
   const server = Fastify({
     logger: false,
+    ajv: {
+      plugins: [ajvFormats],
+    },
   })
 
-  for (const [method, handlers] of Object.entries(routes)) {
+  for (const [method, handlers] of Object.entries(controllers)) {
     for (const [route, handlerData] of Object.entries(handlers)) {
       const params = {}
       if (handlerData.schema) params.schema = handlerData.schema
+       
       server[method](`/${route}`, params, async function (request, reply) {
         try {
-          const response = await handlerData.handler(request.body)
+          const body = request.body
+          const params = request.params
+          const response = await handlerData.handler(body, params)
           reply.code(200).send(response)
         } catch (e) {
           console.error(e)

@@ -15,6 +15,10 @@ const Agent = (sequelize) => {
       type: DataTypes.FLOAT,
       allowNull: false,
     },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
     y: {
       type: DataTypes.FLOAT,
       allowNull: false,
@@ -32,7 +36,7 @@ const Agent = (sequelize) => {
       allowNull: false,
     },
     timestamp: {
-      type: DataTypes.timestamp,
+      type: DataTypes.DATE,
       allowNull: false,
     },
   })

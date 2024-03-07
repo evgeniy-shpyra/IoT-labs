@@ -1,50 +1,34 @@
 import http from './transport/http.js'
-import agentRoutes from './controllers/agent.js'
-import agentController from './controllers/agent.js'
+import initControllers from './controllers/index.js'
+import initServices from './services/index.js'
+import DB from './db/index.js'
 
-
-const routes = {
-  post: {
-    processed_agent_data: {
-      handler: agentController.createAgent,
-      schema: null,
-    },
-  },
-  get: {
-    'processed_agent_data': {
-      handler: agentController.getAllAgent,
-      schema: null,
-    },
-    'processed_agent_data/:id': {
-      handler: agentController.getOneAgent,
-      schema: null,
-    },
-  },
-  put: {
-    '/processed_agent_data/:id': {
-      handler: agentController.updateAgent,
-      schema: null,
-    },
-  },
-  delete: {
-    '/processed_agent_data/:id': {
-      handler: agentController.deleteAgent,
-      schema: null,
-    },
-  },
-}
 
 const start = async () => {
-  const httpServer = http()
+  const dbPassword = process.env.DB_PASSWORD
+  const dbLogin = process.env.DB_LOGIN
+  const dbName = process.env.DB_NAME || 'agent'
+
+  const db = DB({ password: dbPassword, login: dbLogin, name: dbName })
+  
+  const repositories = await db.start()
+
+
+  const services = initServices(repositories)
+  const controllers = initControllers(services)
+  
+  const httpServer = http(controllers)
 
   await httpServer.start()
 
+  const shutdownMaxWait = 5000
   process.on('SIGINT', shutdown)
   process.on('SIGTERM', shutdown)
 
   function shutdown() {
     console.log('closing with grace...')
-    stop()
+    httpServer.stop()
+    db.stop()
     setTimeout(() => process.exit(1), shutdownMaxWait).unref()
   }
 }

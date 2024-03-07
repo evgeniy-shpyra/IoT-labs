@@ -1,28 +1,28 @@
-import {
-  createAgentService,
-  getAllAgentService,
-  getOneAgentService,
-  updateAgentService,
-  deleteAgentService,
-} from '../services/agent.js'
 
-export const createAgent = async (payload) => {
-  const response = await createAgentService(payload)
-  return response
+const agentController = (service) => {
+  return {
+    createAgent: async (body, params) => {
+      const response = await service.createAgent(body)
+      return response
+    },
+    getAllAgent: async (body, params) => {
+      const response = await service.getAllAgent(payload)
+      return response
+    },
+    getOneAgent: async (body, params) => {
+      const response = await service.getOneAgent(payload)
+      return response
+    },
+    updateAgent: async (body, params) => {
+      const response = await service.updateAgent(payload)
+      return response
+    },
+    deleteAgent: async (body, params) => {
+      const id = params.id
+      const response = await service.deleteAgent(id)
+      return response
+    },
+  }
 }
-export const getAllAgent = async (payload) => {
-  const response = await getAllAgentService(payload)
-  return response
-}
-export const getOneAgent = async (payload) => {
-  const response = await getOneAgentService(payload)
-  return response
-}
-export const updateAgent = async (payload) => {
-  const response = await updateAgentService(payload)
-  return response
-}
-export const deleteAgent = async (payload) => {
-  const response = await deleteAgentService(payload)
-  return response
-}
+
+export default agentController
