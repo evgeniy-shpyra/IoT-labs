@@ -1,7 +1,13 @@
 import Fastify from 'fastify'
 import ajvFormats from 'ajv-formats'
+import swagger from '@fastify/swagger'
+import swaggerConfig from './swaggerConfig.js'
+import swaggerUi from '@fastify/swagger-ui'
+import websocket from '@fastify/websocket'
+import statusCodes from '../controllers/statusCodes.js'
+import initWebsocket from './websocket.js'
 
-const http = (controllers = {}, opt = {}) => {
+const server = async (controllers = {}, opt = {}) => {
   const server = Fastify({
     logger: false,
     ajv: {
@@ -9,20 +15,33 @@ const http = (controllers = {}, opt = {}) => {
     },
   })
 
+  // Swagger
+  await server.register(swagger, {})
+  await server.register(swaggerUi, swaggerConfig)
+
+  // Websocket
+  await server.register(websocket)
+  const { sendDataToSubscribers } = initWebsocket(server)
+
+  // init http routes
   for (const [method, handlers] of Object.entries(controllers)) {
     for (const [route, handlerData] of Object.entries(handlers)) {
       const params = {}
       if (handlerData.schema) params.schema = handlerData.schema
-       
+
       server[method](`/${route}`, params, async function (request, reply) {
+
+        // test ws
+        sendDataToSubscribers({ method, route })
+        
         try {
           const body = request.body
           const params = request.params
-          const response = await handlerData.handler(body, params)
-          reply.code(200).send(response)
+          const [code, payload] = await handlerData.handler(body, params)
+          reply.code(code).send(payload)
         } catch (e) {
           console.error(e)
-          reply.code(400).send({ error: e.message })
+          reply.code(statusCodes.error).send({ error: e.message })
         }
       })
     }
@@ -33,6 +52,10 @@ const http = (controllers = {}, opt = {}) => {
       const port = opt.port || 3000
       try {
         await server.listen({ port })
+        server.ready((err) => {
+          if (err) throw err
+          server.swagger()
+        })
         console.log(`Server running at port: ${port}`)
       } catch (err) {
         console.log('An error occurred while starting the server', err)
@@ -49,4 +72,4 @@ const http = (controllers = {}, opt = {}) => {
   }
 }
 
-export default http
+export default server

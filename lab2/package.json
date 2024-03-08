@@ -13,6 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "@fastify/swagger": "^8.14.0",
+    "@fastify/swagger-ui": "^3.0.0",
+    "@fastify/websocket": "^9.0.0",
     "ajv-formats": "^2.1.1",
     "fastify": "^4.26.2",
     "i": "^0.3.7",

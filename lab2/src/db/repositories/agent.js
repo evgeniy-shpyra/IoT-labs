@@ -4,6 +4,28 @@ const repo = (sequelize) => {
   return {
     create: async (payload) => {
       await Agent.create(payload)
+      return true
+    },
+    getAll: async () => {
+      const data = await Agent.findAll({ raw: true })
+      return data
+    },
+    update: async (data, id) => {
+      const response = await Agent.update(data, {
+        where: {
+          id,
+        },
+      })
+      return Boolean(response[0])
+    },
+    getOne: async (id) => {
+      const data = await Agent.findOne({
+        where: {
+          id,
+        },
+      })
+
+      return data
     },
     delete: async (id) => {
       const response = await Agent.destroy({

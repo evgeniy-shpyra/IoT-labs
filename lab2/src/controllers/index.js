@@ -1,9 +1,11 @@
 import agent from './agent.js'
-import createAgentData from './schema/createAgentData.js'
-import deleteAgentData from './schema/deleteAgentData.js'
+import createAgentSchema from '../schema/createAgentSchema.js'
+import deleteAgentSchema from '../schema/deleteAgentSchema.js'
+import updateAgentSchema from '../schema/updateAgentSchema.js'
+import getAllAgentSchema from '../schema/getAllAgentSchema.js'
+import getOneAgentSchema from '../schema/getOneAgentSchema.js'
 
 const initControllers = (services) => {
-  
   const agentService = services.agent
   const agentController = agent(agentService)
 
@@ -11,29 +13,29 @@ const initControllers = (services) => {
     post: {
       processed_agent_data: {
         handler: agentController.createAgent,
-        schema: createAgentData,
+        schema: createAgentSchema,
       },
     },
     get: {
       'processed_agent_data': {
         handler: agentController.getAllAgent,
-        schema: null,
+        schema: getAllAgentSchema,
       },
       'processed_agent_data/:id': {
         handler: agentController.getOneAgent,
-        schema: null,
+        schema: getOneAgentSchema,
       },
     },
     put: {
       'processed_agent_data/:id': {
         handler: agentController.updateAgent,
-        schema: null,
+        schema: updateAgentSchema,
       },
     },
     delete: {
       'processed_agent_data/:id': {
         handler: agentController.deleteAgent,
-        schema: deleteAgentData,
+        schema: deleteAgentSchema,
       },
     },
   }

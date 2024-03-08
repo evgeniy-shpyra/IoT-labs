@@ -7,8 +7,7 @@ const initRepo = (sequelize) => ({
 })
 
 const initModels = async (sequelize) => {
-  const AgentModel = Agent(sequelize)
-
+  Agent(sequelize)
   // await sequelize.sync({ force: true })
   await sequelize.sync({ alter: true})
 }
@@ -23,9 +22,9 @@ const DB = ({ password, login, name }) => {
     start: async () => {
       try {
         await sequelize.authenticate();
-        console.log('Connection has been established successfully.');
+        console.log('Db has been started');
       } catch (error) {
-        console.error('Unable to connect to the database:', error);
+        console.error('Could start db', error);
         process.exit(1)
       }
       await initModels(sequelize)

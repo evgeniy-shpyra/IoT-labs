@@ -1,4 +1,4 @@
-import http from './transport/http.js'
+import server from './server/server.js'
 import initControllers from './controllers/index.js'
 import initServices from './services/index.js'
 import DB from './db/index.js'
@@ -10,15 +10,13 @@ const start = async () => {
   const dbName = process.env.DB_NAME || 'agent'
 
   const db = DB({ password: dbPassword, login: dbLogin, name: dbName })
-  
-  const repositories = await db.start()
-
 
   const services = initServices(repositories)
   const controllers = initControllers(services)
   
-  const httpServer = http(controllers)
-
+  const httpServer = await server(controllers)
+  
+  const repositories = await db.start()
   await httpServer.start()
 
   const shutdownMaxWait = 5000

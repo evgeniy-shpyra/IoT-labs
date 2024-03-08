@@ -3,16 +3,24 @@ const agentService = (repositories) => {
 
   return {
     createAgent: async (payload) => {
-      await agentRepo.create(payload)
-      return payload
+      const isCreated = await agentRepo.create(payload)
+      return isCreated
     },
-    getAllAgent: async (payload) => {},
-    getOneAgent: async (payload) => {},
-    updateAgent: async (payload) => {},
+    getAllAgent: async () => {
+      const data = await agentRepo.getAll()
+      return data
+    },
+    getOneAgent: async (id) => {
+      const data = await agentRepo.getOne(id)
+      return data
+    },
+    updateAgent: async (data, id) => {
+      const isUpdated = await agentRepo.update(data, id)
+      return isUpdated
+    },
     deleteAgent: async (id) => {
-      const response = await agentRepo.delete(id)
-      
-      return id
+      const isDeleted = await agentRepo.delete(id)
+      return isDeleted
     },
   }
 }
