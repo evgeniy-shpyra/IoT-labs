@@ -5,19 +5,21 @@ import DB from './db/index.js'
 
 
 const start = async () => {
-  const dbPassword = process.env.DB_PASSWORD
-  const dbLogin = process.env.DB_LOGIN
-  const dbName = process.env.DB_NAME || 'agent'
+  const dbPassword = process.env.POSTGRES_PASSWORD || 'pass'
+  const dbLogin = process.env.POSTGRES_USER || 'user'
+  const dbName = process.env.POSTGRES_DB || 'test_db'
 
   const db = DB({ password: dbPassword, login: dbLogin, name: dbName })
-
+  const repositories = await db.start()
+  
   const services = initServices(repositories)
   const controllers = initControllers(services)
   
   const httpServer = await server(controllers)
   
-  const repositories = await db.start()
-  await httpServer.start()
+  const httpPort = process.env.HTTP_PORT || 8000
+  const httpHost = process.env.HTTP_HOST || '0.0.0.0'
+  await httpServer.start(httpPort, httpHost)
 
   const shutdownMaxWait = 5000
   process.on('SIGINT', shutdown)

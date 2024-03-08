@@ -1,6 +1,7 @@
 import Fastify from 'fastify'
 import ajvFormats from 'ajv-formats'
 import swagger from '@fastify/swagger'
+import cors from '@fastify/cors'
 import swaggerConfig from './swaggerConfig.js'
 import swaggerUi from '@fastify/swagger-ui'
 import websocket from '@fastify/websocket'
@@ -13,6 +14,10 @@ const server = async (controllers = {}, opt = {}) => {
     ajv: {
       plugins: [ajvFormats],
     },
+  })
+
+  await server.register(cors, {
+    origin: true,
   })
 
   // Swagger
@@ -30,10 +35,9 @@ const server = async (controllers = {}, opt = {}) => {
       if (handlerData.schema) params.schema = handlerData.schema
 
       server[method](`/${route}`, params, async function (request, reply) {
-
         // test ws
         sendDataToSubscribers({ method, route })
-        
+
         try {
           const body = request.body
           const params = request.params
@@ -48,10 +52,9 @@ const server = async (controllers = {}, opt = {}) => {
   }
 
   return {
-    start: async () => {
-      const port = opt.port || 3000
+    start: async (port, host) => {
       try {
-        await server.listen({ port })
+        await server.listen({ port, host })
         server.ready((err) => {
           if (err) throw err
           server.swagger()

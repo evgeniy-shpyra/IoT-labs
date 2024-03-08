@@ -18,7 +18,6 @@ const Agent = (sequelize) => {
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true
     },
     y: {
       type: DataTypes.FLOAT,
