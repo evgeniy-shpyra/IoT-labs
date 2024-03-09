@@ -9,22 +9,25 @@ const initRepo = (sequelize) => ({
 const initModels = async (sequelize) => {
   Agent(sequelize)
   // await sequelize.sync({ force: true })
-  await sequelize.sync({ alter: true})
+  await sequelize.sync({ alter: true })
 }
 
-const DB = ({ password, login, name }) => {
-  const sequelize = new Sequelize(name, login, password, {
-    dialect: "postgres",
-    logging: false,
-  })
+const DB = ({ user, password, host, name, port }) => {
+  // const sequelize = new Sequelize(name, login, password, {
+  //   dialect: "postgres",
+  //   logging: false,
+  // })
 
+  const sequelize = new Sequelize(
+    `postgres://${user}:${password}@${host}:${port}/${name}`
+  )
   return {
     start: async () => {
       try {
-        await sequelize.authenticate();
-        console.log('Db has been started');
+        await sequelize.authenticate()
+        console.log('Db has been started')
       } catch (error) {
-        console.error('Could start db', error);
+        console.error(`Couldn't start db:`, error)
         process.exit(1)
       }
       await initModels(sequelize)
