@@ -1,6 +1,8 @@
+import wsSchema from "../schema/wsSchema.js"
+
 const initWebsocket = (server) => {
   const subscriptions = {}
-  server.get('/ws/:user_id', { websocket: true }, (connection, request) => {
+  server.get('/ws/:user_id', { websocket: true, schema: wsSchema }, (connection, request) => {
     const user_id = request.params.user_id
 
     if (!subscriptions[user_id]) {

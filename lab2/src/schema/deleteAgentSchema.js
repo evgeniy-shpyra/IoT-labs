@@ -9,6 +9,7 @@ const deleteAgentSchema = {
       id: { type: 'integer' },
     },
     required: ['id'],
+    additionalProperties: false,
   },
   response: {
     [statusCodes.noContent]: {

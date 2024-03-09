@@ -35,6 +35,7 @@ const updateAgentSchema = {
       'user_id',
       'timestamp',
     ],
+    additionalProperties: false,
   },
   response: {
     [statusCodes.ok]: {

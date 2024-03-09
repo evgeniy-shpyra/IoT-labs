@@ -8,6 +8,7 @@ const getOneAgentSchema = {
     properties: {
       id: { type: 'integer' },
     },
+    additionalProperties: false,
     required: ['id'],
   },
   response: {

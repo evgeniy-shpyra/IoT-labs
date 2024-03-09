@@ -28,6 +28,7 @@ const createAgentSchema = {
       'user_id',
       'timestamp',
     ],
+    additionalProperties: false,
   },
   response: {
     [statusCodes.created]: {
