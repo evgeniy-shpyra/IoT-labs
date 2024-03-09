@@ -28,7 +28,7 @@ const readData = (files) => {
 
       if (currData.done) {
         stream.iterator = createStream(file)
-        const firstData = await iterator.next()
+        const firstData = await stream.iterator.next()
         value = firstData.value
       } else {
         value = currData.value
