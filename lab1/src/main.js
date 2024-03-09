@@ -74,9 +74,6 @@ const app = async () => {
         uuid,
       })
 
-      console.log(gpsAccMes)
-      process.exit(0)
-
       await sendData({
         client,
         data: JSON.stringify(gpsAccMes),
