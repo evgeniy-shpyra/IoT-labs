@@ -4,9 +4,9 @@ const connect = async () => {
   const broker = process.env.MQTT_BROKER_HOST || '0.0.0.0'
   const port = process.env.MQTT_BROKER_PORT || '1883'
   const url = `mqtt://${broker}:${port}`
-
+  let client = null
   try {
-    const client = await MQTT.connectAsync(url)
+    client = await MQTT.connectAsync(url)
     console.log(`Connected to ${url}`)
     return client
   } catch (e) {

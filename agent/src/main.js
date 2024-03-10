@@ -14,11 +14,11 @@ const files = [
   './data/parking.csv',
 ]
 
-const aggregate = ({ gps, accelerometer, uuid }) => {
+const aggregate = ({ gps, accelerometer, user_id }) => {
   const data = {
     gps,
     accelerometer,
-    user_id: uuid,
+    user_id,
     timestamp: new Date().toISOString(),
   }
 
@@ -58,7 +58,7 @@ const app = async () => {
 
     // // send data
     const delay = Number(process.env.DELAY) || 100
-    const uuid = process.env.UUID || crypto.randomUUID()
+    const user_id = process.env.USER_ID || 1
 
     while (true) {
       // read line
@@ -71,7 +71,7 @@ const app = async () => {
       const gpsAccMes = aggregate({
         accelerometer,
         gps,
-        uuid,
+        user_id,
       })
 
       await sendData({

@@ -8,8 +8,8 @@ const initRepo = (sequelize) => ({
 
 const initModels = async (sequelize) => {
   Agent(sequelize)
-  // await sequelize.sync({ force: true })
-  await sequelize.sync({ alter: true })
+  await sequelize.sync({ force: true })
+  // await sequelize.sync({ alter: true })
 }
 
 const DB = ({ user, password, host, name, port }) => {
