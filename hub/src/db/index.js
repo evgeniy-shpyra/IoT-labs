@@ -23,7 +23,7 @@ const DB = ({ user, password, host, name, port }) => {
         await sequelize.authenticate()
         console.log('Db has been started')
       } catch (error) {
-        console.error(`Couldn't start db:`, error)
+        console.error(`Hub: Couldn't start db:`, error)
         process.exit(1)
       }
       await initModels(sequelize)
@@ -34,9 +34,9 @@ const DB = ({ user, password, host, name, port }) => {
     stop: async () => {
       try {
         await sequelize.close()
-        console.log('Db has been closed')
+        console.log('Hub: Db has been closed')
       } catch (err) {
-        console.log('An error occurred while closing the db', err)
+        console.log('Hub: An error occurred while closing the db', err)
       }
     },
   }

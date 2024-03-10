@@ -15,7 +15,7 @@ const createResponse = (statusCode, data = null, errors = null) => {
 const agentController = (service) => {
   return {
     createAgent: async (body) => {
-      const isCreated = await service.createAgent(body)
+      const isCreated = await service.bulkCreateAgent(body)
       if (isCreated) return createResponse(statusCodes.created)
       return createResponse(statusCodes.error, null, `Can't create the agent`)
     },

@@ -2,8 +2,8 @@ const repo = (sequelize) => {
   const Agent = sequelize.models.processed_agent_data
 
   return {
-    create: async (payload) => {
-      await Agent.create(payload)
+    bulkCreate: async (payload) => {
+      await Agent.bulkCreate(payload)
       return true
     },
     getAll: async () => {

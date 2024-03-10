@@ -46,7 +46,7 @@ services:
       POSTGRES_HOST: postgres_db
       POSTGRES_PORT: 5432
       HTTP_PORT: 8000
-      HTTP_HOST: 0.0.0.0
+      HTTP_HOST: "store"
     ports:
       - "8000:8000"
     networks:

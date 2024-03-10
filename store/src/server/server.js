@@ -59,7 +59,7 @@ const server = async (controllers = {}, opt = {}) => {
           if (err) throw err
           server.swagger()
         })
-        console.log(`Server running at port: ${port}`)
+        console.log(`Server running at: ${host}:${port}`)
       } catch (err) {
         console.log('An error occurred while starting the server', err)
       }

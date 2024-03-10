@@ -2,8 +2,8 @@ const agentService = (repositories) => {
   const agentRepo = repositories.agent
 
   return {
-    createAgent: async (payload) => {
-      const isCreated = await agentRepo.create(payload)
+    bulkCreateAgent: async (payload) => {
+      const isCreated = await agentRepo.bulkCreate(payload)
       return isCreated
     },
     getAllAgent: async () => {
