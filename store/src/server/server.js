@@ -8,7 +8,7 @@ import websocket from '@fastify/websocket'
 import statusCodes from '../controllers/statusCodes.js'
 import initWebsocket from './websocket.js'
 
-const server = async (controllers = {}, opt = {}) => {
+const server = async (controllers = {}) => {
   const server = Fastify({
     logger: false,
     ajv: {

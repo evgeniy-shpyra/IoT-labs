@@ -13,10 +13,6 @@ const initModels = async (sequelize) => {
 }
 
 const DB = ({ user, password, host, name, port }) => {
-  // const sequelize = new Sequelize(name, login, password, {
-  //   dialect: "postgres",
-  //   logging: false,
-  // })
 
   const sequelize = new Sequelize(
     `postgres://${user}:${password}@${host}:${port}/${name}`

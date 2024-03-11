@@ -14,6 +14,7 @@ const getAllAgentSchema = {
           items: {
             type: 'object',
             properties: {
+              id: { type: 'number' },
               road_state: { type: 'string' },
               user_id: { type: 'number' },
               x: { type: 'integer' },

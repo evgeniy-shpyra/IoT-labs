@@ -1,4 +1,3 @@
-import statusCodes from '../controllers/statusCodes.js'
 
 const wsSchema = {
   description: 'subscribe',

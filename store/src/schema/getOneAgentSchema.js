@@ -6,10 +6,10 @@ const getOneAgentSchema = {
   params: {
     type: 'object',
     properties: {
-      id: { type: 'integer' },
+      user_id: { type: 'integer' },
     },
     additionalProperties: false,
-    required: ['id'],
+    required: ['user_id'],
   },
   response: {
     [statusCodes.ok]: {

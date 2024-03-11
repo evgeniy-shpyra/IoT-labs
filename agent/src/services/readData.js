@@ -39,7 +39,7 @@ const readData = (files) => {
     return data
   }
 
-  return { readLine }
+  return readLine
 }
 
 export default readData

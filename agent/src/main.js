@@ -6,7 +6,6 @@ import aggregatedDataSchema from './schema/aggregatedDataSchema.js'
 import gpsSchema from './schema/gpsSchema.js'
 import parkingSchema from './schema/parkingSchema.js'
 
-import crypto from 'node:crypto'
 
 const files = [
   './data/accelerometer.csv',
@@ -46,14 +45,14 @@ const validateData = ({ accelerometer, gps, parking }) => {
 const app = async () => {
   try {
     // create reader
-    const { readLine } = readData(files)
+    const readLine = readData(files)
 
     // create a connect
     const broker = process.env.MQTT_BROKER_HOST || '0.0.0.0'
     const port = process.env.MQTT_BROKER_PORT || '1883'
     const client = await connect({ broker, port })
 
-    const gpsAccTopic = process.env.GPS_ACC_TOPIC || 'agent/gpsAcc'
+    const gpsAccTopic = process.env.GPS_ACC_TOPIC || 'processed_data_topic'
     const parkingTopic = process.env.PARKING_TOPIC || 'agent/parking'
 
     // // send data

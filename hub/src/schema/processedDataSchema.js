@@ -28,6 +28,9 @@ const schema = {
       type: 'string',
       format: 'int32',
     },
+    road_state: {
+      type: 'string',
+    },
   },
   required: ['gps', 'accelerometer', 'timestamp', 'user_id'],
   additionalProperties: false,

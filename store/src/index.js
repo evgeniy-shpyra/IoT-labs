@@ -10,7 +10,6 @@ const start = async () => {
   const dbName = process.env.POSTGRES_DB || 'test_db'
   const dbPort = process.env.POSTGRES_PORT || '5432'
 
-  // const db = DB({ password: dbPassword, login: dbLogin, name: dbName })
   const db = DB({
     user: dbUser,
     password: dbPassword,
