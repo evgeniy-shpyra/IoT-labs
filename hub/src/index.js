@@ -39,7 +39,6 @@ const app = async () => {
       if (!validator(data, processedDataSchema)) {
         throw new Error("Hub: Input data isn't valid")
       }
-
       const aggregatedData = aggregateData({ ...data, road_state })
       if (!validator(aggregatedData, aggregatedDataSchema)) {
         throw new Error("Hub: Aggregated data data isn't valid")
@@ -50,11 +49,16 @@ const app = async () => {
         const agentData = jsonData.map((item) => JSON.parse(item))
 
         const response = await postData(agentData)
-        // if (!response.success) throw new Error('Error from store')
-        console.log(response)
+        if(response.success){
+          console.log("Data was sended to store successfully")
+        }
+        else{
+          console.log("Error from store:", response.payload)
+        }
+       
         await handlersRedis.delete(mqttTopic)
       }
-      console.log({ dataTopic, aggregatedData })
+    
       await handlersRedis.push(dataTopic, aggregatedData)
     } catch (err) {
       console.log('Hub:', err)

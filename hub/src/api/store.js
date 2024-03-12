@@ -3,16 +3,18 @@ const storeApi = (url) => {
     postData: async (data) => {
       try {
         console.log({data, url})
-        const responseStream = await fetch(url, {
+        const response = await fetch(url, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify(data),
         });
-        const response = await responseStream.json();
-
-        return response;
+        if(response.status !== 201){
+          return false
+        }
+        const responseBody = await response.json();
+        return {success: responseBody.success, payload: responseBody.data};
       } catch (e) {
         console.log("Hub: storeApi.postData error:", e);
         return false;
