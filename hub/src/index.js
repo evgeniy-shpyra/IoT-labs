@@ -12,11 +12,11 @@ const mqttTopic = process.env.MQTT_TOPIC || 'processed_data_topic'
 
 const redisHost = process.env.REDIS_HOST || '127.0.0.1'
 const redisPort = process.env.REDIS_PORT || 6379
+const batchSize = +process.env.BATCH_SIZE || 10
 
 const storeApiPort = process.env.STORE_API_PORT || 8000
 const storeApiHost = process.env.STORE_API_HOST || "store"
 const storeApiUrl = `http://${storeApiHost}:${storeApiPort}/processed_agent_data`
-// const storeApiUrl = `http://0.0.0.0:${storeApiPort}/processed_agent_data`
 
 const app = async () => {
   // create a connection to mqtt
@@ -32,27 +32,24 @@ const app = async () => {
 
   mqttClient.on('message', async (topic, message) => {
     try {
-      const road_state = 'good'
+  
       const data = JSON.parse(message.toString())
       const dataTopic = topic.toString()
 
       if (!validator(data, processedDataSchema)) {
         throw new Error("Hub: Input data isn't valid")
       }
-      const aggregatedData = aggregateData({ ...data, road_state })
+      const aggregatedData = aggregateData(data)
       if (!validator(aggregatedData, aggregatedDataSchema)) {
         throw new Error("Hub: Aggregated data data isn't valid")
       }
 
-      if ((await handlersRedis.getLength(dataTopic)) >= 2) {
+      if ((await handlersRedis.getLength(dataTopic)) >= batchSize) {
         const jsonData = await handlersRedis.pullAll(mqttTopic)
         const agentData = jsonData.map((item) => JSON.parse(item))
 
         const response = await postData(agentData)
-        if(response.success){
-          console.log("Data was sended to store successfully")
-        }
-        else{
+        if(!response.success){
           console.log("Error from store:", response.payload)
         }
        

@@ -2,7 +2,7 @@ const storeApi = (url) => {
   return {
     postData: async (data) => {
       try {
-        console.log({data, url})
+       
         const response = await fetch(url, {
           method: 'POST',
           headers: {
