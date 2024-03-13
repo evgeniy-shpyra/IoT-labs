@@ -6,7 +6,6 @@ import processAgentData from './usecases/data_processing.js'
 
 const broker = process.env.MQTT_BROKER_HOST || '0.0.0.0'
 const port = process.env.MQTT_BROKER_PORT || '1883'
-const mqttClient = await mqtt({ broker, port })
 
 const agentTopic = process.env.AGENT_TOPIC || 'agent_data_topic'
 const hubTopic = process.env.HUB_TOPIC || 'processed_data_topic'
@@ -15,6 +14,8 @@ const shutdownMaxWait = process.env.SHUTDOWN_MAX_WAIT || 5000
 const app = async () => {
 
   try {
+    const mqttClient = await mqtt({ broker, port })
+
     const handleAgent = (data) => {
 
       const agentData = JSON.parse(data)
